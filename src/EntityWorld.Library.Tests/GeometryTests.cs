@@ -74,10 +74,37 @@ namespace EntityWorld.Library.Tests
         }
 
         [Theory]
-        [InlineData(0, 0)]
+        [InlineData(0, 60)]
         public void IsRectangleBelowPointNegative(int pointX, int pointY)
         {
             var result = _rectangle.IsBelowPoint(new Point(pointX, pointY));
+
+            Assert.False(result);
+        }
+
+        [Theory]
+        [InlineData(0, 0)]
+        public void IsRectangleBelowPointPositive(int pointX, int pointY)
+        {
+            var result = _rectangle.IsBelowPoint(new Point(pointX, pointY));
+
+            Assert.True(result);
+        }
+
+        [Theory]
+        [InlineData(50, 0)]
+        public void IsRectangleRightOfPointNegative(int pointX, int pointY)
+        {
+            var result = _rectangle.IsRightOfPoint(new Point(pointX, pointY));
+
+            Assert.False(result);
+        }
+
+        [Theory]
+        [InlineData(0, 0)]
+        public void IsRectangleRightOfPointPositive(int pointX, int pointY)
+        {
+            var result = _rectangle.IsRightOfPoint(new Point(pointX, pointY));
 
             Assert.True(result);
         }

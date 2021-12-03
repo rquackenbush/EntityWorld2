@@ -6,9 +6,9 @@ namespace EntityWorld.Library
     {
         public int CycleIndex { get; set; }
 
-        public Rectangle WorldSize { get; set; }
+        public Rectangle WorldBounds { get; set; }
 
-        public Rectangle FoodLocation { get; set; }
+        public Rectangle FoodBounds { get; set; }
 
         public EntityState[] Entities { get; set; }
     }

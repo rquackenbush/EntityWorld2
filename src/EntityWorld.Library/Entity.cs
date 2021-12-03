@@ -15,25 +15,24 @@ namespace EntityWorld.Library
             switch(State.Instructions[State.ProgramCounter])
             {
                 case Instruction.MoveLeft:
-                    MoveLeft(worldState.WorldSize);
+                    MoveLeft(worldState.WorldBounds);
                     break;
 
                 case Instruction.MoveUp:
-                    MoveUp(worldState.WorldSize);
+                    MoveUp(worldState.WorldBounds);
                     break;
 
                 case Instruction.MoveRight:
-                    MoveRight(worldState.WorldSize);
+                    MoveRight(worldState.WorldBounds);
                     break;
 
                 case Instruction.MoveDown:
-                    MoveDown(worldState.WorldSize);
+                    MoveDown(worldState.WorldBounds);
                     break;
 
                 case Instruction.SkipIfFoodNotLeft:
 
-                    if (!worldState.FoodLocation.IsLeftOfPoint(State.CurrentPosition))
-                    //if (State.CurrentPosition.IsToLeftOfRectangle(worldState.FoodLocation))
+                    if (!worldState.FoodBounds.IsLeftOfPoint(State.CurrentPosition))
                     {
                         State.ProgramCounter++;
                     }
@@ -42,8 +41,7 @@ namespace EntityWorld.Library
 
                 case Instruction.SkipIfFoodNotUp:
 
-                    if (!worldState.FoodLocation.IsAbovePoint(State.CurrentPosition))
-                    //if (State.CurrentPosition.IsAboveRectangle(worldState.FoodLocation))
+                    if (!worldState.FoodBounds.IsAbovePoint(State.CurrentPosition))
                     {
                         State.ProgramCounter++;
                     }
@@ -52,8 +50,7 @@ namespace EntityWorld.Library
 
                 case Instruction.SkipIfFoodNotRight:
 
-                    if (!worldState.FoodLocation.IsRightOfPoint(State.CurrentPosition))
-                    //if (State.CurrentPosition.IsToRightOfRectangle(worldState.FoodLocation))
+                    if (!worldState.FoodBounds.IsRightOfPoint(State.CurrentPosition))
                     {
                         State.ProgramCounter++;
                     }
@@ -62,8 +59,7 @@ namespace EntityWorld.Library
 
                 case Instruction.SkipIfFoodNotDown:
 
-                    if (!worldState.FoodLocation.IsBelowPoint(State.CurrentPosition))
-                    //if (State.CurrentPosition.IsBelowRectangle(worldState.FoodLocation))
+                    if (!worldState.FoodBounds.IsBelowPoint(State.CurrentPosition))
                     {
                         State.ProgramCounter++;
                     }
@@ -81,13 +77,18 @@ namespace EntityWorld.Library
                 State.ProgramCounter = 0;
             }
 
-            if (worldState.FoodLocation.Contains(State.CurrentPosition))
+            if (worldState.FoodBounds.Contains(State.CurrentPosition))
             {
                 State.StomachContentsLevel++;
             }
             else
             {
                 State.StomachContentsLevel--;
+            }
+
+            if (State.StomachContentsLevel < 0)
+            {
+                State.StomachContentsLevel = 0;
             }
         }
 
